@@ -13,7 +13,7 @@ void printi(char* str, item_t item)
 	memset(spaces, 0, 11);
 	memset(spaces, ' ',	MAX_NAME_LEN - strlen(item.name));
 
-	sprintf(str, "%s%s| %s", item.name, spaces, floatstr);
+	sprintf(str, "%s%s| $%s", item.name, spaces, floatstr);
 	free(floatstr);
 	free(spaces);
 }

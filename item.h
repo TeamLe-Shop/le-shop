@@ -12,6 +12,7 @@ typedef struct
 {
     char name[MAX_NAME_LEN];
     float price;
+	char desc[86];
 } item_t ;
 
 

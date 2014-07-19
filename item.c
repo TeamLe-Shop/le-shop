@@ -3,11 +3,7 @@
 void print_item(char* str, item_t item)
 {
 	char* floatstr = malloc(sizeof(char) * 20);
-	sprintf(floatstr, "%f", item.price);
-
-	int chars;
-	chars = indexof(floatstr, '.') + 4;
-	snprintf(floatstr, chars, "%f", item.price);
+	decimal_places(floatstr, item.price, 2);	
 
 	char* spaces = malloc(11);
 	memset(spaces, 0, 11);

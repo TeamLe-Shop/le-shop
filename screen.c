@@ -15,8 +15,12 @@ void screen_init(void)
 
 void render(void)
 {
-	char* str = malloc(30);
+	int y, x;
+	getmaxyx(stdscr, y, x);
+
+	char* str = malloc(x);
 	int i;
+
 	for (i = 0; i < item_count; i++)
 	{
 		print_item(str, item_list[i]);
@@ -28,14 +32,9 @@ void render(void)
 		attroff(COLOR_PAIR(1));
 	}
 
-	int y, x;
-	getmaxyx(stdscr, y, x);
-
-	str = realloc(str, x);
 	memset(str, '-', x);
-
 	mvprintw(5, 0, str);
-	
+
 	free(str);
 }
 

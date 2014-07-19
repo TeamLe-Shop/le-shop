@@ -20,6 +20,6 @@ typedef struct
  *	 name | price
  * into a string.
  */
-void printi(char*, item_t);
+void print_item(char*, item_t);
 
 #endif /* ITEM_H */

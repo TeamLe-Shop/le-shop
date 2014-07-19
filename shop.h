@@ -4,9 +4,13 @@
 #include <stdlib.h>
 #include "item.h"
 
-const int ITEM_COUNT = 2;
-item_t coat;
-item_t shoes;
+extern int item_count;
+
+/* ITEM LIST */
+extern item_t cat;
+extern item_t shoes;
+extern item_t bread;
+
 item_t* item_list;
 
 void shop_init(void);

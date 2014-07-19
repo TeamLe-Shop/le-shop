@@ -7,12 +7,15 @@
 #include "item.h"
 
 /* The last key pressed. Each time a key is
- * pressed, render() is called. */
-int LAST_KEY;
+ * pressed, input() is called. */
+extern int last_key;
 
 void screen_init(void);
 
 /* Renders all the information on the screen. */
 void render(void);
+
+/* Called when a key is pressed. */
+void input(void);
 
 #endif /* SCREEN_H */

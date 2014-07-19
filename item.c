@@ -1,6 +1,6 @@
 #include "item.h"
 
-void printi(char* str, item_t item)
+void print_item(char* str, item_t item)
 {
 	char* floatstr = malloc(sizeof(char) * 20);
 	sprintf(floatstr, "%f", item.price);

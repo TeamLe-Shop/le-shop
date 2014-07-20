@@ -1,3 +1,4 @@
 shop
 *.swp
 *.gch
+CMakeLists.txt.user

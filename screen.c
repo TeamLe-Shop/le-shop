@@ -52,7 +52,7 @@ void render(void)
 
 
 	memset(str, '-', x);
-	mvprintw(5, 0, "%*s", x, str);
+	mvprintw(5, 0, "%.*s", x, str);
 	
 	decimal_places(str, money, 2);
 	mvprintw(6, 0, "Balance: ");
@@ -66,7 +66,7 @@ void render(void)
 	attroff(COLOR_PAIR(3));
 
 	memset(str, '-', x);
-	mvprintw(12, 0, "%*s", x, str);
+	mvprintw(12, 0, "%.*s", x, str);
 
 	mvprintw(13, 0, "Press Q to quit");
 

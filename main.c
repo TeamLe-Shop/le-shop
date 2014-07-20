@@ -18,6 +18,6 @@ int main(void)
 	}
 
 	shop_destroy();	
-	endwin();
+	screen_destroy();
     return 0;
 }

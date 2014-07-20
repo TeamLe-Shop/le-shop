@@ -9,7 +9,9 @@ const int SHOP_LIST = 0,
 int status = 0;
 int statuses = 2;
 
-float money = 50.00f;
+long int money = 5000;
+
+char* money_status;
 
 void screen_init(void)
 {
@@ -21,6 +23,14 @@ void screen_init(void)
 	init_pair(1, COLOR_BLACK, COLOR_GREEN);
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+
+	money_status = malloc(sizeof(char) * 26);
+}
+
+void screen_destroy(void)
+{
+	endwin();
+	free(money_status);
 }
 
 void render(void)
@@ -38,10 +48,9 @@ void render(void)
 		if (selected_item == i)
 		{
 			if (status == SHOP_LIST)
-			{
 				attron(COLOR_PAIR(1));
-			}
-			else attron(COLOR_PAIR(2));
+			else
+				attron(COLOR_PAIR(2));
 		}
 		
 		mvprintw(i, 0, "%s\n", str);
@@ -50,15 +59,32 @@ void render(void)
 		attroff(COLOR_PAIR(2));
 	}
 
+	if (status == MENU)
+	{
+		if (last_key == KEY_ENTER)
+		{
+			status = SHOP_LIST;
+		}
+		else
+		{
+			attron(COLOR_PAIR(1));
+			mvprintw(selected_item, 25, " BUY? (y/n) ");
+			attroff(COLOR_PAIR(1));
+		}
+	}
+
 
 	memset(str, '-', x);
 	mvprintw(5, 0, "%.*s", x, str);
 	
-	decimal_places(str, money, 2);
+	print_money(str, money);
+
 	mvprintw(6, 0, "Balance: ");
 	attron(COLOR_PAIR(3));
 	printw("$%s", str);	
 	attroff(COLOR_PAIR(3));
+
+	mvprintw(6, 20, "(%s)", money_status);	
 
 	mvprintw(7, 0, "Description:");
 	attron(COLOR_PAIR(3));
@@ -75,6 +101,23 @@ void render(void)
 
 void input(void)
 {
+	if (status == MENU)
+	{
+		if (last_key == 'y')
+		{
+			status = SHOP_LIST;
+			if (money < item_list[selected_item].price)
+			{
+				sprintf(money_status, "Not enough money.");
+			} else
+			{
+				money -= item_list[selected_item].price;
+				char* money_str = malloc(20);
+				print_money(money_str, item_list[selected_item].price);
+				sprintf(money_status, "-$%s", money_str);
+			}
+		} else status = SHOP_LIST;
+	}
 	if (last_key == KEY_DOWN)
 	{
 		if (status == SHOP_LIST)
@@ -91,9 +134,10 @@ void input(void)
 				selected_item--;
 		}
 	}
-	else if (last_key == 'p')
+	else if (last_key == 'b')
 	{
-		status++;
-		if (status == statuses) status = 0;
+		if (status == SHOP_LIST) status = MENU;
+		else if (status == MENU)	status = SHOP_LIST;
 	}
 }
+

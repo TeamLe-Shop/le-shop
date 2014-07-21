@@ -25,6 +25,7 @@ void screen_init(void)
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 
 	money_status = malloc(sizeof(char) * 26);
+	memset(money_status, 0, 26);
 }
 
 void screen_destroy(void)

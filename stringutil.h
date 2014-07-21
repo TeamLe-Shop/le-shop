@@ -10,7 +10,8 @@
  */
 int indexof(char*, int);
 
-/* Stores a string containing a _f_ to
+/* -= CURRENTLY UNUSED =-
+ * Stores a string containing a _f_ to
  * _p_ decimal places.
  */
 void decimal_places(char* str, float f, int p);

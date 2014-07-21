@@ -10,7 +10,13 @@
  * pressed, input() is called. */
 extern int last_key;
 
+/* Initializes the window for ncurses. */
 void screen_init(void);
+
+/* Destroys the ncurses window and frees
+ * some variables.
+ */
+void screen_destroy(void);
 
 /* Renders all the information on the screen. */
 void render(void);

@@ -6,7 +6,7 @@ void print_item(char* str, item_t item)
 	memset(spaces, 0, 11);
 	memset(spaces, ' ',	MAX_NAME_LEN - strlen(item.name));
 
-	char* istr = malloc(sizeof(char) * 2);
+	char istr[3];
 
 	int cents   = item.price % 100;
 	long int dollars = item.price / 100;

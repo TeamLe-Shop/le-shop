@@ -2,7 +2,7 @@
 
 void print_item(char* str, item_t item)
 {
-	char* spaces = malloc(11);
+	char spaces[11];
 	memset(spaces, 0, 11);
 	memset(spaces, ' ',	MAX_NAME_LEN - strlen(item.name));
 
@@ -14,7 +14,6 @@ void print_item(char* str, item_t item)
 	if (cents < 10) sprintf(istr, "0%i", cents);
 	else sprintf(istr, "%i", cents);
 	sprintf(str, "%s%s| $%li.%s", item.name, spaces, dollars, istr);
-	free(spaces);
 }
 
 void print_money(char* str, long int price)

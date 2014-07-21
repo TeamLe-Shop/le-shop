@@ -39,7 +39,7 @@ void render(void)
 	size_t y, x;
 	getmaxyx(stdscr, y, x);
 
-	char* str = malloc(x + 1);
+	char str[x + 1];
 	size_t i;
 
 	for (i = 0; i < item_count; i++)
@@ -96,8 +96,6 @@ void render(void)
 	mvprintw(12, 0, "%.*s", x, str);
 
 	mvprintw(13, 0, "Press Q to quit");
-
-	free(str);
 }
 
 void input(void)
@@ -113,7 +111,7 @@ void input(void)
 			} else
 			{
 				money -= item_list[selected_item].price;
-				char* money_str = malloc(20);
+				char money_str[20];
 				print_money(money_str, item_list[selected_item].price);
 				sprintf(money_status, "-$%s", money_str);
 			}

@@ -8,6 +8,6 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR
     add_compile_options(-std=c99 -pedantic -Wall)
 endif()
 
-aux_source_directory(. SRC_FILES)
-add_executable(shop ${SRC_FILES})
+file(GLOB_RECURSE SOURCES *.h *.c)
+add_executable(shop ${SOURCES})
 target_link_libraries(shop ${CURSES_LIBRARIES})

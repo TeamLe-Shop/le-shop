@@ -20,7 +20,6 @@ void Vector_impl_grow(Vector* v, size_t size)
 	v->ptr = realloc(v->ptr, v->length * size);
 }
 
-
 size_t Vector_len(Vector* v)
 {
 	return v->length;

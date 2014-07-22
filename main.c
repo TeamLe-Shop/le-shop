@@ -1,4 +1,4 @@
-#include <ncurses.h>
+#include <curses.h>
 #include <stdlib.h>
 #include "screen.h"
 #include "shop.h"

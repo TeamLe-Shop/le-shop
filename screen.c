@@ -44,7 +44,7 @@ void render(void)
 
 	for (i = 0; i < item_count; i++)
 	{
-		print_item(str, item_list[i]);
+		print_item(str, shop_item_at(i));
 
 		if (selected_item == i)
 		{
@@ -89,7 +89,7 @@ void render(void)
 
 	mvprintw(7, 0, "Description:");
 	attron(COLOR_PAIR(3));
-	mvprintw(8, 2, "%s", item_list[selected_item].desc);
+	mvprintw(8, 2, "%s", shop_item_at(selected_item).desc);
 	attroff(COLOR_PAIR(3));
 
 	memset(str, '-', x);
@@ -105,14 +105,14 @@ void input(void)
 		if (last_key == 'y')
 		{
 			status = SHOP_LIST;
-			if (money < item_list[selected_item].price)
+			if (money < shop_item_at(selected_item).price)
 			{
 				sprintf(money_status, "Not enough money.");
 			} else
 			{
-				money -= item_list[selected_item].price;
+				money -= shop_item_at(selected_item).price;
 				char money_str[20];
-				print_money(money_str, item_list[selected_item].price);
+				print_money(money_str, shop_item_at(selected_item).price);
 				sprintf(money_status, "-$%s", money_str);
 			}
 		} else status = SHOP_LIST;

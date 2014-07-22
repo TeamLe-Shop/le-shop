@@ -8,6 +8,8 @@ item_t bread = {"Bread", 925, "The finest bread baked in France by Sir Deux.\n"
 								"  He's famous for having yellow hair."};
 item_t wine  = {"Wine", 1679, "Crystal red wine, fit for any occasion."};
 
+item_t* item_list;
+
 void shop_init(void)
 {
 	item_list = malloc(sizeof(item_t) * item_count);
@@ -20,4 +22,10 @@ void shop_init(void)
 void shop_destroy(void)
 {
 	free(item_list);
+}
+
+
+item_t shop_item_at(size_t index)
+{
+	return item_list[index];
 }

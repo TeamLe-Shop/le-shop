@@ -1,7 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include <ncurses.h>
+#include <curses.h>
 #include <stdlib.h>
 #include "shop.h"
 #include "item.h"
@@ -10,10 +10,10 @@
  * pressed, input() is called. */
 extern int last_key;
 
-/* Initializes the window for ncurses. */
+/* Initializes the window for curses. */
 void screen_init(void);
 
-/* Destroys the ncurses window and frees
+/* Destroys the curses window and frees
  * some variables.
  */
 void screen_destroy(void);

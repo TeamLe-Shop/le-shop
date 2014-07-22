@@ -42,7 +42,7 @@ void render(void)
 	char str[x + 1];
 	size_t i;
 
-	for (i = 0; i < item_count; i++)
+	for (i = 0; i < shop_item_count(); i++)
 	{
 		print_item(str, shop_item_at(i));
 
@@ -121,7 +121,7 @@ void input(void)
 	{
 		if (status == SHOP_LIST)
 		{
-			if (selected_item < item_count - 1)
+			if (selected_item < shop_item_count() - 1)
 				selected_item++;
 		}
 	}

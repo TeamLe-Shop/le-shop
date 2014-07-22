@@ -29,3 +29,9 @@ item_t shop_item_at(size_t index)
 {
 	return item_list[index];
 }
+
+
+size_t shop_item_count()
+{
+	return item_count;
+}

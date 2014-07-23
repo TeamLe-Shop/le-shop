@@ -1,5 +1,5 @@
-#ifndef STRINGUTIL_H
-#define STRINGUTIL_H
+#ifndef UTIL_STRINGUTIL_H
+#define UTIL_STRINGUTIL_H
 
 #include <string.h>
 #include <stdlib.h>
@@ -16,4 +16,4 @@ int indexof(char*, int);
  */
 void decimal_places(char* str, float f, int p);
 
-#endif /* STRINGUTIL_H */
+#endif /* UTIL_STRINGUTIL_H */

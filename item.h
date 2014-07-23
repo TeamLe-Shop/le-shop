@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "stringutil.h"
+#include "util/stringutil.h"
 
 #define MAX_NAME_LEN 11
 

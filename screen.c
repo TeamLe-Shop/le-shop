@@ -95,7 +95,7 @@ void render(void)
 	memset(str, '-', x);
 	mvprintw(12, 0, "%.*s", x, str);
 
-	mvprintw(13, 0, "Press Q to quit");
+	mvprintw(13, 0, "B - buy, Q - quit");
 }
 
 void input(void)

@@ -11,7 +11,7 @@ int statuses = 2;
 
 long int money = 5000;
 
-char* money_status;
+char money_status[26];
 
 void screen_init(void)
 {
@@ -24,14 +24,12 @@ void screen_init(void)
 	init_pair(2, COLOR_BLACK, COLOR_WHITE);
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 
-	money_status = malloc(sizeof(char) * 26);
 	memset(money_status, 0, 26);
 }
 
 void screen_destroy(void)
 {
 	endwin();
-	free(money_status);
 }
 
 void render(void)

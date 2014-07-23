@@ -16,6 +16,8 @@ screen.c
 screen.h
 shop.c
 shop.h
+user.c
+user.h
 util/stringutil.c
 util/stringutil.h
 util/vector.c

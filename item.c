@@ -24,5 +24,9 @@ void print_money(char* str, long int price)
 	if (cents < 10)
 	{
 		sprintf(str, "%li.0%i", dollars, cents);
-	} else sprintf(str, "%li.%i", dollars, cents);
+	}
+	else
+	{
+		sprintf(str, "%li.%i", dollars, cents);
+	}
 }

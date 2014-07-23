@@ -12,8 +12,6 @@ typedef enum
 
 Status status = SHOP_LIST;
 
-long int money = 5000;
-
 char money_status[26];
 
 void screen_init(void)
@@ -43,6 +41,12 @@ void render(void)
 	char str[x + 1];
 	size_t i;
 
+	mvprintw(0, 0, "SHOP ITEMS");
+	mvprintw(0, 31, "INVENTORY");
+	memset(str, '_', x);
+	mvprintw(1, 0, str);
+
+	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(); i++)
 	{
 		print_item(str, shop_item_at(i));
@@ -55,7 +59,7 @@ void render(void)
 				attron(COLOR_PAIR(2));
 		}
 		
-		mvprintw(i, 0, "%s\n", str);
+		mvprintw(2 + i, 0, "%s\n", str);
 
 		attroff(COLOR_PAIR(1));
 		attroff(COLOR_PAIR(2));
@@ -68,38 +72,45 @@ void render(void)
 			status = SHOP_LIST;
 		}
 	}
+	/* -= End Rendering Shop List -= */
 
+
+	/* -= Render The Inventory -= */
+	for (i = 0; i < Vector_len(user_inventory); i++)
+	{
+		invitem_t citem = Vector_at(user_inventory, invitem_t, i);
+		mvprintw(2 + i, 31, "%s  x%i", citem.item.name, citem.count);
+	}
+	/* -= End Rendering Inventory -= */
 
 	memset(str, '-', x);
-	mvprintw(5, 0, "%.*s", x, str);
+	mvprintw(7, 0, "%.*s", x, str);
 	
-	print_money(str, money);
+	print_money(str, user_money);
 
-	mvprintw(6, 0, "Balance: ");
+	mvprintw(8, 0, "Balance: ");
 	attron(COLOR_PAIR(3));
 	printw("$%s", str);	
 	attroff(COLOR_PAIR(3));
 
-	mvprintw(6, 20, "(%s)", money_status);	
+	mvprintw(8, 20, "(%s)", money_status);	
 
-	mvprintw(7, 0, "Description:");
+	mvprintw(9, 0, "Description:");
 	attron(COLOR_PAIR(3));
-	mvprintw(8, 2, "%s", shop_item_at(selected_item).desc);
+	mvprintw(10, 2, "%s", shop_item_at(selected_item).desc);
 	attroff(COLOR_PAIR(3));
 
 	memset(str, '-', x);
-	mvprintw(12, 0, "%.*s", x, str);
+	mvprintw(14, 0, "%.*s", x, str);
 
-	mvprintw(13, 0, "B - buy, Q - quit");
+	mvprintw(15, 0, "B - buy, Q - quit");
 }
 
 void input(void)
 {
 	if (status == MENU)
 	{
-		if (last_key == 'y')
-		{
-				} else status = SHOP_LIST;
+		
 	}
 	if (last_key == KEY_DOWN)
 	{
@@ -120,15 +131,16 @@ void input(void)
 	else if (last_key == 'b')
 	{
 		status = SHOP_LIST;
-		if (money < shop_item_at(selected_item).price)
+		if (user_money < shop_item_at(selected_item).price)
 		{
 			sprintf(money_status, "Not enough money.");
 		} else
 		{
-			money -= shop_item_at(selected_item).price;
+			user_money -= shop_item_at(selected_item).price;
 			char money_str[20];
 			print_money(money_str, shop_item_at(selected_item).price);
-			sprintf(money_status, "-$%s", money_str);		
+			user_add_item(shop_item_at(selected_item));
+			sprintf(money_status, "-$%s", money_str);
 		}
 	}
 }

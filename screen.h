@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "shop.h"
 #include "item.h"
+#include "user.h"
 
 /* The last key pressed. Each time a key is
  * pressed, input() is called. */

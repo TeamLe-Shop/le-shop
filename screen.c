@@ -11,7 +11,6 @@ typedef enum
 } Status;
 
 Status status = SHOP_LIST;
-int statuses = 2;
 
 long int money = 5000;
 

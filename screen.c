@@ -4,10 +4,13 @@ size_t selected_item;
 size_t selected_option;
 int last_key;
 
-const int SHOP_LIST = 0,
-		       MENU = 1;
-int status = 0;
-int statuses = 2;
+typedef enum
+{
+	SHOP_LIST,
+	MENU
+} Status ;
+
+Status status = SHOP_LIST;
 
 char money_status[26];
 
@@ -75,7 +78,6 @@ void render(void)
 	/* -= Render The Inventory -= */
 	for (i = 0; i < Vector_len(user_inventory); i++)
 	{
-		mvprintw(20 + i, 0, "fgt");
 		invitem_t citem = Vector_at(user_inventory, invitem_t, i);
 		mvprintw(2 + i, 31, "%s  x%i", citem.item.name, citem.count);
 	}

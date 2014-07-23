@@ -8,6 +8,17 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR
     add_compile_options(-std=c99 -pedantic -Wall)
 endif()
 
-file(GLOB_RECURSE SOURCES *.h *.c)
-add_executable(shop ${SOURCES})
+add_executable(shop
+item.c
+item.h
+main.c
+screen.c
+screen.h
+shop.c
+shop.h
+util/stringutil.c
+util/stringutil.h
+util/vector.c
+util/vector.h
+)
 target_link_libraries(shop ${CURSES_LIBRARIES})

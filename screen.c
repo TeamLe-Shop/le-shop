@@ -64,12 +64,6 @@ void render(void)
 		{
 			status = SHOP_LIST;
 		}
-		else
-		{
-			attron(COLOR_PAIR(1));
-			mvprintw(selected_item, 25, " BUY? (y/n) ");
-			attroff(COLOR_PAIR(1));
-		}
 	}
 
 
@@ -102,18 +96,7 @@ void input(void)
 	{
 		if (last_key == 'y')
 		{
-			status = SHOP_LIST;
-			if (money < shop_item_at(selected_item).price)
-			{
-				sprintf(money_status, "Not enough money.");
-			} else
-			{
-				money -= shop_item_at(selected_item).price;
-				char money_str[20];
-				print_money(money_str, shop_item_at(selected_item).price);
-				sprintf(money_status, "-$%s", money_str);
-			}
-		} else status = SHOP_LIST;
+				} else status = SHOP_LIST;
 	}
 	if (last_key == KEY_DOWN)
 	{
@@ -133,8 +116,17 @@ void input(void)
 	}
 	else if (last_key == 'b')
 	{
-		if (status == SHOP_LIST) status = MENU;
-		else if (status == MENU)	status = SHOP_LIST;
+		status = SHOP_LIST;
+		if (money < shop_item_at(selected_item).price)
+		{
+			sprintf(money_status, "Not enough money.");
+		} else
+		{
+			money -= shop_item_at(selected_item).price;
+			char money_str[20];
+			print_money(money_str, shop_item_at(selected_item).price);
+			sprintf(money_status, "-$%s", money_str);		
+		}
 	}
 }
 

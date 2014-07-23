@@ -6,7 +6,7 @@
 #include <string.h>
 #include "util/stringutil.h"
 
-#define MAX_NAME_LEN 11
+#define MAX_NAME_LEN 13
 
 typedef struct
 {

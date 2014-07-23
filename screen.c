@@ -4,9 +4,13 @@ size_t selected_item;
 size_t selected_option;
 int last_key;
 
-const int SHOP_LIST = 0,
-		       MENU = 1;
-int status = 0;
+typedef enum
+{
+	SHOP_LIST,
+	MENU
+} Status;
+
+Status status = SHOP_LIST;
 int statuses = 2;
 
 long int money = 5000;

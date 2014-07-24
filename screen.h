@@ -1,10 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include <curses.h>
-#include <stdlib.h>
 #include "shop.h"
-#include "item.h"
 #include "user.h"
 
 /* Initializes the window for curses. */

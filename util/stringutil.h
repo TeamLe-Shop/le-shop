@@ -1,10 +1,6 @@
 #ifndef UTIL_STRINGUTIL_H
 #define UTIL_STRINGUTIL_H
 
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-
 /* Returns the index of a character in
  * a string. Returns -1 if not found.
  */

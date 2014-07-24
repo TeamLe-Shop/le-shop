@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <curses.h>
 #include "screen.h"
 #include "shop.h"
 #include "user.h"

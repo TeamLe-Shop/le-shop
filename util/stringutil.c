@@ -1,5 +1,8 @@
 #include "stringutil.h"
 
+#include <string.h>
+#include <stdio.h>
+
 int indexof(char* string, int ch)
 {
 	char* ptr = strchr(string, ch);

@@ -1,6 +1,9 @@
 #include "screen.h"
 #include "usd.h"
 
+#include <curses.h>
+#include <string.h>
+
 /* The selected options for
  * menus and such. */
 size_t selected_item;

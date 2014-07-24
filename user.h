@@ -4,12 +4,12 @@
 #include <curses.h>
 #include "util/vector.h"
 #include "item.h"
-
+#include "usd.h"
 
 typedef struct
 {
 	Vector* inventory;
-	long int money;
+	usd_cent money;
 } user_t;
 
 /* Pretty much the same as item_t,

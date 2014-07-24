@@ -21,6 +21,8 @@ shop.c
 shop.h
 user.c
 user.h
+usd.h
+usd.c
 util/stringutil.c
 util/stringutil.h
 util/vector.c

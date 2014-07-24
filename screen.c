@@ -1,4 +1,5 @@
 #include "screen.h"
+#include "usd.h"
 
 /* The selected options for
  * menus and such. */
@@ -48,26 +49,6 @@ void screen_init(void)
 void screen_destroy(void)
 {
 	endwin();
-}
-
-/*
- * Outputs _price_ in the format of:
- *   [price / 100].[price % 100]
- * Into a string.
- *
- * It will insert an extra '0' before
- * the second value if it is less than 10.
- */
-static void writestr_money(char* str, long int price)
-{
-	int cents = price % 100;
-	long int dollars = price / 100;
-
-	/* '1000' should look like '10.00'. */
-	if (cents < 10)
-		sprintf(str, "%li.0%i", dollars, cents);
-	else
-		sprintf(str, "%li.%i", dollars, cents);
 }
 
 /* Outputs information about an item in the
@@ -141,7 +122,7 @@ void render(shop_t* shop, user_t* user)
 	mvprintw(7, 0, "%.*s", x, str);
 	
 	/* Output formatted money string to str. */
-	writestr_money(str, user->money);
+	usd_write_into_str(str, user->money);
 
 	/* Print the money out in yellow! */
 	mvprintw(8, 0, "Balance: ");
@@ -203,7 +184,7 @@ void input(shop_t* shop, user_t* user, int ch)
 		{
 			user->money -= shop_item_at(shop, selected_item).price;
 			char money_str[20];
-			writestr_money(money_str, shop_item_at(shop, selected_item).price);
+			usd_write_into_str(money_str, shop_item_at(shop, selected_item).price);
 			user_add_item(user, shop_item_at(shop, selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}

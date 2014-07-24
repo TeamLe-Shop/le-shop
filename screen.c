@@ -68,7 +68,7 @@ void render(void)
 	mvprintw(0, 0, "SHOP ITEMS");
 	mvprintw(0, 31, "INVENTORY");
 	memset(str, '_', x);
-	mvprintw(1, 0, str);
+	mvprintw(1, 0,"%.*s\n", x, str);
 
 	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(); i++)

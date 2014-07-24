@@ -18,14 +18,7 @@ void user_destroy(user_t *user)
 
 void user_add_item(user_t* user, item_t item)
 {
-	int i;
-	invitem_t new_item = {item, 1};
-	if (Vector_len(user->inventory) == 0)
-	{
-		Vector_add(user->inventory, invitem_t, new_item);
-		return;
-	}
-	for (i = 0; i < Vector_len(user->inventory); i++)
+	for (int i = 0; i < Vector_len(user->inventory); i++)
 	{
 		invitem_t* citem = &Vector_at(user->inventory, invitem_t, i);
 		if (strcmp(item.name, citem->item.name) == 0)
@@ -35,5 +28,6 @@ void user_add_item(user_t* user, item_t item)
 		}
 	}
 	
+	invitem_t new_item = {item, 1};
 	Vector_add(user->inventory, invitem_t, new_item);
 }

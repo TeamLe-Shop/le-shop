@@ -107,7 +107,6 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(shop); i++)
 	{
-
 		if (ui_state->selected_item == i)
 		{
 			if (ui_state->mode == SHOP_LIST)

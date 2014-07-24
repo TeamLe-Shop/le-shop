@@ -1,7 +1,6 @@
 #ifndef USER_H
 #define USER_H
 
-#include <curses.h>
 #include "util/vector.h"
 #include "item.h"
 #include "usd.h"

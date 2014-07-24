@@ -11,7 +11,7 @@ int last_key;
 typedef enum
 {
 	SHOP_LIST,
-	MENU
+	NAVIGATION
 } Status;
 
 Status status = SHOP_LIST;
@@ -89,13 +89,6 @@ void render(void)
 		attroff(COLOR_PAIR(2));
 	}
 
-	if (status == MENU)
-	{
-		if (last_key == KEY_ENTER)
-		{
-			status = SHOP_LIST;
-		}
-	}
 	/* -= End Rendering Shop List -= */
 
 
@@ -107,6 +100,7 @@ void render(void)
 	}
 	/* -= End Rendering Inventory -= */
 
+
 	/* Dashes to seperate parts of the screen. */
 	memset(str, '-', x);
 	mvprintw(7, 0, "%.*s", x, str);
@@ -117,7 +111,7 @@ void render(void)
 	/* Print the money out in yellow! */
 	mvprintw(8, 0, "Balance: ");
 	attron(COLOR_PAIR(3));
-	printw("$%s", str);	
+ 	printw("$%s", str);	
 	attroff(COLOR_PAIR(3));
 
 	/* Print the money status string. */
@@ -136,6 +130,13 @@ void render(void)
 
 	/* Some nice instructions for the user. */
 	mvprintw(15, 0, "B - buy, Q - quit");
+
+	/* The navigation menu. */
+	if (status == NAVIGATION)
+	{
+		mvprintw(17, 0, "Navigation: >");
+		mvprintw(19, 2, "TOILETS\n  OUTSIDE");
+	}
 }
 
 void input(void)
@@ -171,6 +172,11 @@ void input(void)
 			user_add_item(shop_item_at(selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}
+	}
+	else if (last_key == 'n')	/* GO TO NAVIGATION MENU */
+	{
+		if (status == SHOP_LIST) status = NAVIGATION;
+		else status = SHOP_LIST;
 	}
 }
 

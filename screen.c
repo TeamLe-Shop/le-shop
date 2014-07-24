@@ -50,7 +50,7 @@ void screen_destroy(void)
 	endwin();
 }
 
-void render(shop_t* shop)
+void render(shop_t* shop, user_t* user)
 {
 	/* The height (y) and width (x) of the window. */
 	size_t y, x;
@@ -91,9 +91,9 @@ void render(shop_t* shop)
 
 
 	/* -= Render The Inventory -= */
-	for (i = 0; i < Vector_len(user_inventory); i++)
+	for (i = 0; i < Vector_len(user->inventory); i++)
 	{
-		invitem_t citem = Vector_at(user_inventory, invitem_t, i);
+		invitem_t citem = Vector_at(user->inventory, invitem_t, i);
 		mvprintw(2 + i, 31, "%s  x%i", citem.item.name, citem.count);
 	}
 	/* -= End Rendering Inventory -= */
@@ -104,7 +104,7 @@ void render(shop_t* shop)
 	mvprintw(7, 0, "%.*s", x, str);
 	
 	/* Output formatted money string to str. */
-	writestr_money(str, user_money);
+	writestr_money(str, user->money);
 
 	/* Print the money out in yellow! */
 	mvprintw(8, 0, "Balance: ");
@@ -137,7 +137,7 @@ void render(shop_t* shop)
 	}
 }
 
-void input(shop_t* shop, int ch)
+void input(shop_t* shop, user_t* user, int ch)
 {
 	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
@@ -158,16 +158,16 @@ void input(shop_t* shop, int ch)
 	else if (ch == 'b')	/* BUY ITEM */
 	{
 		status = SHOP_LIST;
-		if (user_money < shop_item_at(shop, selected_item).price)
+		if (user->money < shop_item_at(shop, selected_item).price)
 		{
 			sprintf(money_status, "Not enough money.");
 		}
 		else
 		{
-			user_money -= shop_item_at(shop, selected_item).price;
+			user->money -= shop_item_at(shop, selected_item).price;
 			char money_str[20];
 			writestr_money(money_str, shop_item_at(shop, selected_item).price);
-			user_add_item(shop_item_at(shop, selected_item));
+			user_add_item(user, shop_item_at(shop, selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}
 	}

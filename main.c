@@ -10,12 +10,12 @@ int main(void)
 	 * needed for various things... */
 
 	shop_t* shop = shop_new();
-	user_init();
+	user_t* user = user_new(5000);
 	screen_init();
 
 	for (;;)
 	{
-		render(shop);
+		render(shop, user);
 		refresh();
 		int ch = getch();
 
@@ -24,13 +24,13 @@ int main(void)
 			break;
 		}
 
-		input(shop, ch);
+		input(shop, user, ch);
 		erase();
 	}
 
 	/* ... Destroy them when we're done. */
 	shop_destroy(shop);
-	user_destroy();
+	user_destroy(user);
 	screen_destroy();
     return 0;
 }

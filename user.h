@@ -6,8 +6,11 @@
 #include "item.h"
 
 
-extern Vector* user_inventory;
-extern long int user_money;
+typedef struct
+{
+	Vector* inventory;
+	long int money;
+} user_t;
 
 /* Pretty much the same as item_t,
  * except there can be stacks of it.
@@ -18,16 +21,16 @@ typedef struct
 	size_t count;
 } invitem_t;
 
-/* Initialize all the user variables. */
-void user_init(void);
+/* Create a new shop user */
+user_t* user_new(long int money);
 
 /* Destroy the user variables */
-void user_destroy(void);
+void user_destroy(user_t* user);
 
 /* Add an item to the player's inventory.
  * if one of the same type is already present,
  * it will be "stacked on" to the existing one.
  */
-void user_add_item(item_t);
+void user_add_item(user_t* user, item_t item);
 
 #endif /* USER_H */

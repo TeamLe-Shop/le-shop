@@ -16,9 +16,9 @@ void screen_init(void);
 void screen_destroy(void);
 
 /* Renders all the information on the screen. */
-void render(shop_t *shop);
+void render(shop_t *shop, user_t *user);
 
 /* Called when a key is pressed. */
-void input(shop_t *shop, int ch);
+void input(shop_t *shop, user_t *user, int ch);
 
 #endif /* SCREEN_H */

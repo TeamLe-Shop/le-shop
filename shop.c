@@ -28,7 +28,7 @@ item_t shop_item_at(size_t index)
 	return Vector_at(items, item_t, index);
 }
 
-size_t shop_item_count()
+size_t shop_item_count(void)
 {
 	return Vector_len(items);
 }

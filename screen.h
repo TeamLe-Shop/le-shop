@@ -4,18 +4,7 @@
 #include "shop.h"
 #include "user.h"
 
-/* Initializes the window for curses. */
-void screen_init(void);
-
-/* Destroys the curses window and frees
- * some variables.
- */
-void screen_destroy(void);
-
-/* Renders all the information on the screen. */
-void render(shop_t *shop, user_t *user);
-
-/* Called when a key is pressed. */
-void input(shop_t *shop, user_t *user, int ch);
+/* Execute the draw-input loop */
+void screen_exec(shop_t* shop, user_t* user);
 
 #endif /* SCREEN_H */

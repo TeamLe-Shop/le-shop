@@ -22,7 +22,16 @@ Status status = SHOP_LIST;
  * something. */
 char money_status[26];
 
-void screen_init(void)
+/* Destroys the curses window and frees
+ * some variables.
+ */
+static void destroy(void)
+{
+	endwin();
+}
+
+/* Initializes the window for curses. */
+static void init(void)
 {
 	initscr();
 	keypad(stdscr, TRUE);
@@ -32,7 +41,7 @@ void screen_init(void)
 	{
 		/* Get rid of the window, print a message
 		 * and then exit eith error code (1). */
-		screen_destroy();
+		destroy();
 		printf("Whoopsies. Your terminal doesn't support color.\n");
 		exit(1);
 	}
@@ -47,11 +56,6 @@ void screen_init(void)
 
 	/* Zero out money_status. */
 	memset(money_status, 0, 26);
-}
-
-void screen_destroy(void)
-{
-	endwin();
 }
 
 /* Outputs information about an item in the
@@ -71,7 +75,8 @@ static void writestr_item(char* str, item_t item)
 	sprintf(str, "%-*s| $%li.%s", ITEM_MAX_NAME_LEN, item.name, dollars, istr);
 }
 
-void render(shop_t* shop, user_t* user)
+/* Renders all the information on the screen. */
+static void render(shop_t* shop, user_t* user)
 {
 	/* The height (y) and width (x) of the window. */
 	size_t y, x;
@@ -158,7 +163,8 @@ void render(shop_t* shop, user_t* user)
 	}
 }
 
-void input(shop_t* shop, user_t* user, int ch)
+/* Called when a key is pressed. */
+static void input(shop_t* shop, user_t* user, int ch)
 {
 	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
@@ -199,3 +205,24 @@ void input(shop_t* shop, user_t* user, int ch)
 	}
 }
 
+void screen_exec(shop_t* shop, user_t* user)
+{
+	init();
+
+	for (;;)
+	{
+		render(shop, user);
+		refresh();
+		int ch = getch();
+
+		if (ch == 'q')
+		{
+			break;
+		}
+
+		input(shop, user, ch);
+		erase();
+	}
+
+	destroy();
+}

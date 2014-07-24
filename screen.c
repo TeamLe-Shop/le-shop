@@ -107,7 +107,6 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(shop); i++)
 	{
-		writestr_item(str, shop_item_at(shop, i));
 
 		if (ui_state->selected_item == i)
 		{
@@ -117,6 +116,7 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 				attron(COLOR_PAIR(2));
 		}
 		
+		writestr_item(str, shop_item_at(shop, i));
 		mvprintw(2 + i, 0, "%s\n", str);
 
 		attroff(COLOR_PAIR(1));

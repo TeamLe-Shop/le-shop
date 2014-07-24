@@ -4,22 +4,33 @@
 #include <curses.h>
 #include <string.h>
 
-/* The selected options for
- * menus and such. */
-size_t selected_item;
-
 /* What the user is currently focused on. */
 typedef enum
 {
 	SHOP_LIST,
 	NAVIGATION
-} Status;
+} Mode;
 
-Status status = SHOP_LIST;
+typedef struct
+{
+	/* The selected options for
+	 * menus and such. */
+	size_t selected_item;
+	/* A string that gets updated after buying
+	 * something. */
+	char money_status[26];
+	/* What the user is currently focused on. */
+	Mode mode;
+} ui_state_t;
 
-/* A string that gets updated after buying
- * something. */
-char money_status[26];
+static ui_state_t new_ui_state()
+{
+	ui_state_t ui_state;
+	ui_state.mode = SHOP_LIST;
+	memset(ui_state.money_status, 0, sizeof(ui_state.money_status));
+	ui_state.selected_item = 0;
+	return ui_state;
+}
 
 /* Destroys the curses window and frees
  * some variables.
@@ -30,7 +41,7 @@ static void destroy(void)
 }
 
 /* Initializes the window for curses. */
-static void init(void)
+static void init(ui_state_t* ui_state)
 {
 	initscr();
 	keypad(stdscr, TRUE);
@@ -54,7 +65,7 @@ static void init(void)
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 
 	/* Zero out money_status. */
-	memset(money_status, 0, 26);
+	memset(ui_state->money_status, 0, 26);
 }
 
 /* Outputs information about an item in the
@@ -75,7 +86,7 @@ static void writestr_item(char* str, item_t item)
 }
 
 /* Renders all the information on the screen. */
-static void render(shop_t* shop, user_t* user)
+static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 {
 	/* The height (y) and width (x) of the window. */
 	size_t y, x;
@@ -98,9 +109,9 @@ static void render(shop_t* shop, user_t* user)
 	{
 		writestr_item(str, shop_item_at(shop, i));
 
-		if (selected_item == i)
+		if (ui_state->selected_item == i)
 		{
-			if (status == SHOP_LIST)
+			if (ui_state->mode == SHOP_LIST)
 				attron(COLOR_PAIR(1));
 			else
 				attron(COLOR_PAIR(2));
@@ -138,14 +149,14 @@ static void render(shop_t* shop, user_t* user)
 	attroff(COLOR_PAIR(3));
 
 	/* Print the money status string. */
-	mvprintw(8, 20, "(%s)", money_status);	
+	mvprintw(8, 20, "(%s)", ui_state->money_status);
 
 	/* The description of the item. This will be
 	 * shifted over 2 spaces and printed in yellow. */
 
 	mvprintw(9, 0, "Description:");
 	attron(COLOR_PAIR(3));
-	mvprintw(10, 2, "%s", shop_item_at(shop, selected_item).desc);
+	mvprintw(10, 2, "%s", shop_item_at(shop, ui_state->selected_item).desc);
 	attroff(COLOR_PAIR(3));
 
 	memset(str, '-', x);
@@ -155,7 +166,7 @@ static void render(shop_t* shop, user_t* user)
 	mvprintw(15, 0, "B - buy, Q - quit");
 
 	/* The navigation menu. */
-	if (status == NAVIGATION)
+	if (ui_state->mode == NAVIGATION)
 	{
 		mvprintw(17, 0, "Navigation: >");
 		mvprintw(19, 2, "TOILETS\n  OUTSIDE");
@@ -163,54 +174,56 @@ static void render(shop_t* shop, user_t* user)
 }
 
 /* Called when a key is pressed. */
-static void input(shop_t* shop, user_t* user, int ch)
+static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 {
 	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
-		if (status == SHOP_LIST)
+		if (ui_state->mode == SHOP_LIST)
 		{
-			if (selected_item < shop_item_count(shop) - 1)
-				selected_item++;
+			if (ui_state->selected_item < shop_item_count(shop) - 1)
+				ui_state->selected_item++;
 		}
 	}
 	else if (ch == KEY_UP) /* MOVE SELECTION UP */
 	{
-		if (status == SHOP_LIST)
+		if (ui_state->mode == SHOP_LIST)
 		{
-			if (selected_item > 0)
-				selected_item--;
+			if (ui_state->selected_item > 0)
+				ui_state->selected_item--;
 		}
 	}
 	else if (ch == 'b')	/* BUY ITEM */
 	{
-		status = SHOP_LIST;
-		if (user->money < shop_item_at(shop, selected_item).price)
+		ui_state->mode = SHOP_LIST;
+		if (user->money < shop_item_at(shop, ui_state->selected_item).price)
 		{
-			sprintf(money_status, "Not enough money.");
+			sprintf(ui_state->money_status, "Not enough money.");
 		}
 		else
 		{
-			user->money -= shop_item_at(shop, selected_item).price;
+			user->money -= shop_item_at(shop, ui_state->selected_item).price;
 			char money_str[20];
-			usd_write_into_str(money_str, shop_item_at(shop, selected_item).price);
-			user_add_item(user, shop_item_at(shop, selected_item));
-			sprintf(money_status, "-$%s", money_str);
+			usd_write_into_str(money_str, shop_item_at(shop, ui_state->selected_item).price);
+			user_add_item(user, shop_item_at(shop, ui_state->selected_item));
+			sprintf(ui_state->money_status, "-$%s", money_str);
 		}
 	}
 	else if (ch == 'n')	/* GO TO NAVIGATION MENU */
 	{
-		if (status == SHOP_LIST) status = NAVIGATION;
-		else status = SHOP_LIST;
+		if (ui_state->mode == SHOP_LIST) ui_state->mode = NAVIGATION;
+		else ui_state->mode = SHOP_LIST;
 	}
 }
 
 void screen_exec(shop_t* shop, user_t* user)
 {
-	init();
+	ui_state_t ui_state = new_ui_state();
+
+	init(&ui_state);
 
 	for (;;)
 	{
-		render(shop, user);
+		render(shop, user, &ui_state);
 		refresh();
 		int ch = getch();
 
@@ -219,7 +232,7 @@ void screen_exec(shop_t* shop, user_t* user)
 			break;
 		}
 
-		input(shop, user, ch);
+		input(shop, user, &ui_state, ch);
 		erase();
 	}
 

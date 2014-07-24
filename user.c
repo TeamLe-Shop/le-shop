@@ -1,6 +1,6 @@
 #include "user.h"
 
-user_t* user_new(long int money)
+user_t* user_new(usd_cent money)
 {
 	user_t* user = malloc(sizeof(user_t));
 	user->money = money;

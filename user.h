@@ -22,7 +22,7 @@ typedef struct
 } invitem_t;
 
 /* Create a new shop user */
-user_t* user_new(long int money);
+user_t* user_new(usd_cent money);
 
 /* Destroy the user variables */
 void user_destroy(user_t* user);

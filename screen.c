@@ -7,7 +7,6 @@
 /* The selected options for
  * menus and such. */
 size_t selected_item;
-size_t selected_option;
 
 /* What the user is currently focused on. */
 typedef enum

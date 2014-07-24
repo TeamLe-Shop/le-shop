@@ -13,6 +13,7 @@ typedef enum
 	SHOP_LIST,
 	MENU
 } Status;
+
 Status status = SHOP_LIST;
 
 /* A string that gets updated after buying
@@ -72,7 +73,7 @@ void render(void)
 	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(); i++)
 	{
-		print_item(str, shop_item_at(i));
+		writestr_item(str, shop_item_at(i));
 
 		if (selected_item == i)
 		{
@@ -112,6 +113,7 @@ void render(void)
 	
 	/* Output formatted money string to str. */
 	print_money(str, user_money);
+	writestr_money(str, user_money);
 
 	/* Print the money out in yellow! */
 	mvprintw(8, 0, "Balance: ");
@@ -166,7 +168,7 @@ void input(void)
 		{
 			user_money -= shop_item_at(selected_item).price;
 			char money_str[20];
-			print_money(money_str, shop_item_at(selected_item).price);
+			writestr_money(money_str, shop_item_at(selected_item).price);
 			user_add_item(shop_item_at(selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}

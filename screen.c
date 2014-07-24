@@ -50,7 +50,7 @@ void screen_destroy(void)
 	endwin();
 }
 
-void render(void)
+void render(shop_t* shop)
 {
 	/* The height (y) and width (x) of the window. */
 	size_t y, x;
@@ -69,9 +69,9 @@ void render(void)
 	mvprintw(1, 0,"%.*s\n", x, str);
 
 	/* -= Render the Shop List =- */
-	for (i = 0; i < shop_item_count(); i++)
+	for (i = 0; i < shop_item_count(shop); i++)
 	{
-		writestr_item(str, shop_item_at(i));
+		writestr_item(str, shop_item_at(shop, i));
 
 		if (selected_item == i)
 		{
@@ -120,7 +120,7 @@ void render(void)
 
 	mvprintw(9, 0, "Description:");
 	attron(COLOR_PAIR(3));
-	mvprintw(10, 2, "%s", shop_item_at(selected_item).desc);
+	mvprintw(10, 2, "%s", shop_item_at(shop, selected_item).desc);
 	attroff(COLOR_PAIR(3));
 
 	memset(str, '-', x);
@@ -137,13 +137,13 @@ void render(void)
 	}
 }
 
-void input(int ch)
+void input(shop_t* shop, int ch)
 {
 	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
 		if (status == SHOP_LIST)
 		{
-			if (selected_item < shop_item_count() - 1)
+			if (selected_item < shop_item_count(shop) - 1)
 				selected_item++;
 		}
 	}
@@ -158,16 +158,16 @@ void input(int ch)
 	else if (ch == 'b')	/* BUY ITEM */
 	{
 		status = SHOP_LIST;
-		if (user_money < shop_item_at(selected_item).price)
+		if (user_money < shop_item_at(shop, selected_item).price)
 		{
 			sprintf(money_status, "Not enough money.");
 		}
 		else
 		{
-			user_money -= shop_item_at(selected_item).price;
+			user_money -= shop_item_at(shop, selected_item).price;
 			char money_str[20];
-			writestr_money(money_str, shop_item_at(selected_item).price);
-			user_add_item(shop_item_at(selected_item));
+			writestr_money(money_str, shop_item_at(shop, selected_item).price);
+			user_add_item(shop_item_at(shop, selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}
 	}

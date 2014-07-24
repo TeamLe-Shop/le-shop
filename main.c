@@ -9,22 +9,27 @@ int main(void)
 	/* Initialize all the variables needed
 	 * needed for various things... */
 
-	shop_init();
+	shop_t* shop = shop_new();
 	user_init();
 	screen_init();
-	int ch;
 
-	while (ch != 'q')
+	for (;;)
 	{
-		render();
+		render(shop);
 		refresh();
-		ch = getch();
-		input(ch);
+		int ch = getch();
+
+		if (ch == 'q')
+		{
+			break;
+		}
+
+		input(shop, ch);
 		erase();
 	}
 
 	/* ... Destroy them when we're done. */
-	shop_destroy();	
+	shop_destroy(shop);
 	user_destroy();
 	screen_destroy();
     return 0;

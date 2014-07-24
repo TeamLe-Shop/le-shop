@@ -50,6 +50,43 @@ void screen_destroy(void)
 	endwin();
 }
 
+/*
+ * Outputs _price_ in the format of:
+ *   [price / 100].[price % 100]
+ * Into a string.
+ *
+ * It will insert an extra '0' before
+ * the second value if it is less than 10.
+ */
+static void writestr_money(char* str, long int price)
+{
+	int cents = price % 100;
+	long int dollars = price / 100;
+
+	/* '1000' should look like '10.00'. */
+	if (cents < 10)
+		sprintf(str, "%li.0%i", dollars, cents);
+	else
+		sprintf(str, "%li.%i", dollars, cents);
+}
+
+/* Outputs information about an item in the
+ * following format:
+ *	 name | $price
+ * into a string.
+ */
+static void writestr_item(char* str, item_t item)
+{
+	char istr[3];
+
+	int cents = item.price % 100;
+	long int dollars = item.price / 100;
+
+	if (cents < 10) sprintf(istr, "0%i", cents);
+	else sprintf(istr, "%i", cents);
+	sprintf(str, "%-*s| $%li.%s", ITEM_MAX_NAME_LEN, item.name, dollars, istr);
+}
+
 void render(shop_t* shop, user_t* user)
 {
 	/* The height (y) and width (x) of the window. */

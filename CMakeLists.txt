@@ -13,7 +13,6 @@ if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR
 endif()
 
 add_executable(shop
-item.c
 item.h
 main.c
 screen.c

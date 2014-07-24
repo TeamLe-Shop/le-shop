@@ -6,6 +6,10 @@ find_package(Curses REQUIRED)
 if ("${CMAKE_C_COMPILER_ID}" STREQUAL "GNU" OR
     "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang")
     add_compile_options(-std=c99 -pedantic -Wall)
+    if(SANITIZE)
+        add_compile_options(-fsanitize=${SANITIZE})
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SANITIZE}")
+    endif()
 endif()
 
 add_executable(shop

@@ -112,7 +112,6 @@ void render(void)
 	mvprintw(7, 0, "%.*s", x, str);
 	
 	/* Output formatted money string to str. */
-	print_money(str, user_money);
 	writestr_money(str, user_money);
 
 	/* Print the money out in yellow! */

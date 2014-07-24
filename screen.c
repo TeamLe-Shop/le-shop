@@ -49,7 +49,7 @@ void render(void)
 	/* -= Render the Shop List =- */
 	for (i = 0; i < shop_item_count(); i++)
 	{
-		print_item(str, shop_item_at(i));
+		writestr_item(str, shop_item_at(i));
 
 		if (selected_item == i)
 		{
@@ -86,7 +86,7 @@ void render(void)
 	memset(str, '-', x);
 	mvprintw(7, 0, "%.*s", x, str);
 	
-	print_money(str, user_money);
+	writestr_money(str, user_money);
 
 	mvprintw(8, 0, "Balance: ");
 	attron(COLOR_PAIR(3));
@@ -138,7 +138,7 @@ void input(void)
 		{
 			user_money -= shop_item_at(selected_item).price;
 			char money_str[20];
-			print_money(money_str, shop_item_at(selected_item).price);
+			writestr_money(money_str, shop_item_at(selected_item).price);
 			user_add_item(shop_item_at(selected_item));
 			sprintf(money_status, "-$%s", money_str);
 		}

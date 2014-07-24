@@ -1,6 +1,6 @@
 #include "item.h"
 
-void print_item(char* str, item_t item)
+void writestr_item(char* str, item_t item)
 {
 	char istr[3];
 
@@ -12,7 +12,7 @@ void print_item(char* str, item_t item)
 	sprintf(str, "%-*s| $%li.%s", MAX_NAME_LEN, item.name, dollars, istr);
 }
 
-void print_money(char* str, long int price)
+void writestr_money(char* str, long int price)
 {
 	int cents = price % 100;
 	long int dollars = price / 100;

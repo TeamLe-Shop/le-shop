@@ -21,7 +21,7 @@ typedef struct
  *	 name | $price
  * into a string.
  */
-void print_item(char*, item_t);
+void writestr_item(char*, item_t);
 
 /*
  * Outputs _price_ in the format of:
@@ -31,6 +31,6 @@ void print_item(char*, item_t);
  * It will insert an extra '0' before
  * the second value if it is less than 10.
  */
-void print_money(char*, long int price);
+void writestr_money(char*, long int price);
 
 #endif /* ITEM_H */

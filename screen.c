@@ -5,8 +5,6 @@
 size_t selected_item;
 size_t selected_option;
 
-int last_key;
-
 /* What the user is currently focused on. */
 typedef enum
 {
@@ -139,9 +137,9 @@ void render(void)
 	}
 }
 
-void input(void)
+void input(int ch)
 {
-	if (last_key == KEY_DOWN)	/* MOVE SELECTION DOWN */
+	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
 		if (status == SHOP_LIST)
 		{
@@ -149,7 +147,7 @@ void input(void)
 				selected_item++;
 		}
 	}
-	else if (last_key == KEY_UP) /* MOVE SELECTION UP */
+	else if (ch == KEY_UP) /* MOVE SELECTION UP */
 	{
 		if (status == SHOP_LIST)
 		{
@@ -157,7 +155,7 @@ void input(void)
 				selected_item--;
 		}
 	}
-	else if (last_key == 'b')	/* BUY ITEM */
+	else if (ch == 'b')	/* BUY ITEM */
 	{
 		status = SHOP_LIST;
 		if (user_money < shop_item_at(selected_item).price)
@@ -173,7 +171,7 @@ void input(void)
 			sprintf(money_status, "-$%s", money_str);
 		}
 	}
-	else if (last_key == 'n')	/* GO TO NAVIGATION MENU */
+	else if (ch == 'n')	/* GO TO NAVIGATION MENU */
 	{
 		if (status == SHOP_LIST) status = NAVIGATION;
 		else status = SHOP_LIST;

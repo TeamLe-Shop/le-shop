@@ -7,10 +7,6 @@
 #include "item.h"
 #include "user.h"
 
-/* The last key pressed. Each time a key is
- * pressed, input() is called. */
-extern int last_key;
-
 /* Initializes the window for curses. */
 void screen_init(void);
 
@@ -23,6 +19,6 @@ void screen_destroy(void);
 void render(void);
 
 /* Called when a key is pressed. */
-void input(void);
+void input(int ch);
 
 #endif /* SCREEN_H */

@@ -12,13 +12,14 @@ int main(void)
 	shop_init();
 	user_init();
 	screen_init();
+	int ch;
 
-	while (last_key != 'q')
+	while (ch != 'q')
 	{
 		render();
 		refresh();
-		last_key = getch();
-		input();
+		ch = getch();
+		input(ch);
 		erase();
 	}
 

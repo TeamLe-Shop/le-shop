@@ -3,7 +3,8 @@
 ## What's le-shop? ##
 
 le-shop is a virtual shopping program written
-in C that uses the curses library.
+in C that uses the curses library. It is intended to
+be humurous.
 
 ### Controls ###
 

@@ -14,6 +14,7 @@ Up            | Move selection up
 Down          | Move selection down
 B             | Buy selected item
 Q             | Quit program
+N             | Navigation Menu
 
 ### Community ###
 

@@ -8,7 +8,7 @@
 item_t shop_item_at(size_t index);
 
 /* Returns number of items the shop has */
-size_t shop_item_count();
+size_t shop_item_count(void);
 
 /* Initializes the items and the item list. */
 void shop_init(void);

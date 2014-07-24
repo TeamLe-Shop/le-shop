@@ -6,6 +6,9 @@
 
 int main(void)
 {
+	/* Initialize all the variables needed
+	 * needed for various things... */
+
 	shop_init();
 	user_init();
 	screen_init();
@@ -19,6 +22,7 @@ int main(void)
 		erase();
 	}
 
+	/* ... Destroy them when we're done. */
 	shop_destroy();	
 	user_destroy();
 	screen_destroy();

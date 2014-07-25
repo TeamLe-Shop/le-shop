@@ -15,12 +15,14 @@ typedef enum
  * for the user to jump to.
  */
 
-typedef struct
-{
-	char* name;
-	Location* locations;
-} Location;
+struct location;
 
+struct location {
+	char* name;
+	struct location* locations;
+};
+
+typedef struct location Location;
 
 typedef struct
 {
@@ -37,7 +39,7 @@ typedef struct
 static ui_state_t new_ui_state()
 {
 	ui_state_t ui_state;
-	ui_state.mode = MODE;
+	ui_state.mode = MENU;
 	memset(ui_state.money_status, 0, sizeof(ui_state.money_status));
 	ui_state.selected_item = 0;
 	return ui_state;
@@ -118,7 +120,7 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 	{
 		if (ui_state->selected_item == i)
 		{
-			if (ui_state->mode == SHOP_LIST)
+			if (ui_state->mode == MENU)
 				attron(COLOR_PAIR(1));
 			else
 				attron(COLOR_PAIR(2));
@@ -194,7 +196,7 @@ static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 	}
 	else if (ch == KEY_UP) /* MOVE SELECTION UP */
 	{
-		if (ui_state->mode == SHOP_LIST)
+		if (ui_state->mode == MENU)
 		{
 			if (ui_state->selected_item > 0)
 				ui_state->selected_item--;
@@ -202,7 +204,7 @@ static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 	}
 	else if (ch == 'b')	/* BUY ITEM */
 	{
-		ui_state->mode = SHOP_LIST;
+		ui_state->mode = MENU;
 		if (user->money < shop_item_at(shop, ui_state->selected_item).price)
 		{
 			sprintf(ui_state->money_status, "Not enough money.");
@@ -218,8 +220,8 @@ static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 	}
 	else if (ch == 'n')	/* GO TO NAVIGATION MENU */
 	{
-		if (ui_state->mode == SHOP_LIST) ui_state->mode = NAVIGATION;
-		else ui_state->mode = SHOP_LIST;
+		if (ui_state->mode == MENU) ui_state->mode = NAVIGATION;
+		else ui_state->mode = MENU;
 	}
 }
 

@@ -1,0 +1,14 @@
+**Observe_Player:
+	'ey! Who is youse..?
+	'ey! Whazzup?
+**Player_Buy_Alot:
+	Heheh, youse got money to burn!
+	Yo, youse rich or someding..?
+	Youse famous or someding..?
+**Player_Eat_Alot:
+	Youse lovin' Mc Dol'ns?
+	Youse always eat 'ere?
+	Heheh, watch it, befo' youse get fat!
+	Youse gotta be starvin'!
+	Youse better make note o'dem toilets in dere!
+

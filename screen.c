@@ -7,9 +7,20 @@
 /* What the user is currently focused on. */
 typedef enum
 {
-	SHOP_LIST,
+	MENU,
 	NAVIGATION
 } Mode;
+
+/* A Location that can contain other locations
+ * for the user to jump to.
+ */
+
+typedef struct
+{
+	char* name;
+	Location* locations;
+} Location;
+
 
 typedef struct
 {
@@ -26,15 +37,13 @@ typedef struct
 static ui_state_t new_ui_state()
 {
 	ui_state_t ui_state;
-	ui_state.mode = SHOP_LIST;
+	ui_state.mode = MODE;
 	memset(ui_state.money_status, 0, sizeof(ui_state.money_status));
 	ui_state.selected_item = 0;
 	return ui_state;
 }
 
-/* Destroys the curses window and frees
- * some variables.
- */
+/* Destroys the curses window. */
 static void destroy(void)
 {
 	endwin();
@@ -177,7 +186,7 @@ static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 {
 	if (ch == KEY_DOWN)	/* MOVE SELECTION DOWN */
 	{
-		if (ui_state->mode == SHOP_LIST)
+		if (ui_state->mode == MENU)
 		{
 			if (ui_state->selected_item < shop_item_count(shop) - 1)
 				ui_state->selected_item++;

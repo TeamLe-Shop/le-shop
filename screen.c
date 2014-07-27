@@ -214,18 +214,19 @@ static void input(shop_t* shop, user_t* user, ui_state_t* ui_state, int ch)
 	}
 	else if (ch == 'b')	/* BUY ITEM */
 	{
-		ui_state->mode = MENU;
-		if (user->money < shop_item_at(shop, ui_state->selected_item).price)
-		{
-			sprintf(ui_state->money_status, "Not enough money.");
-		}
-		else
-		{
-			user->money -= shop_item_at(shop, ui_state->selected_item).price;
-			char money_str[20];
-			usd_write_into_str(money_str, shop_item_at(shop, ui_state->selected_item).price);
-			user_add_item(user, shop_item_at(shop, ui_state->selected_item));
-			sprintf(ui_state->money_status, "-$%s", money_str);
+		if (ui_state->mode == MENU) {
+			if (user->money < shop_item_at(shop, ui_state->selected_item).price)
+			{
+				sprintf(ui_state->money_status, "Not enough money.");
+			}
+			else
+			{
+				user->money -= shop_item_at(shop, ui_state->selected_item).price;
+				char money_str[20];
+				usd_write_into_str(money_str, shop_item_at(shop, ui_state->selected_item).price);
+				user_add_item(user, shop_item_at(shop, ui_state->selected_item));
+				sprintf(ui_state->money_status, "-$%s", money_str);
+			}
 		}
 	}
 	else if (ch == 'n')	/* GO TO NAVIGATION MENU */

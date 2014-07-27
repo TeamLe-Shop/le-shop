@@ -11,6 +11,15 @@ typedef enum
 	NAVIGATION
 } Mode;
 
+/* The current state. This can be the Shop,
+ * outside, a restaurant, the toilets, or
+ * something else. */
+typedef enum
+{
+	SHOP,
+	OUTSIDE
+} State;
+
 /* A Location that can contain other locations
  * for the user to jump to.
  */
@@ -64,6 +73,7 @@ static void init(ui_state_t* ui_state)
 		 * and then exit eith error code (1). */
 		destroy();
 		printf("Whoopsies. Your terminal doesn't support color.\n");
+		getch();
 		exit(1);
 	}
 
@@ -111,7 +121,7 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 
 	/* Print a nice heading. */
 	mvprintw(0, 0, "SHOP ITEMS");
-	mvprintw(0, 31, "INVENTORY");
+	mvprintw(0, 31, "INVENTORY (%li Stacks | %li Total)", Vector_len(user->inventory), user_total_items(user));
 	memset(str, '_', x);
 	mvprintw(1, 0,"%.*s\n", x, str);
 

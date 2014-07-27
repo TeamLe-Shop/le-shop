@@ -8,7 +8,7 @@
 typedef struct
 {
 	Vector* items;
-}shop_t;
+} shop_t;
 
 /* Gets item at index i */
 item_t shop_item_at(shop_t* shop, size_t index);

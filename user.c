@@ -16,6 +16,17 @@ void user_destroy(user_t *user)
 	free(user);
 }
 
+size_t user_total_items(user_t* user)
+{
+	size_t count = 0;
+	for (int i = 0; i < Vector_len(user->inventory); i++)
+	{
+		invitem_t* citem = &Vector_at(user->inventory, invitem_t, i);
+		count += citem->count;
+	}
+	return count;
+}
+
 void user_add_item(user_t* user, item_t item)
 {
 	for (int i = 0; i < Vector_len(user->inventory); i++)

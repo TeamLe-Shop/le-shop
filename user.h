@@ -26,6 +26,10 @@ user_t* user_new(usd_cent money);
 /* Destroy the user variables */
 void user_destroy(user_t* user);
 
+/* Return the total amount of items in a
+ * users inventory. */
+size_t user_total_items(user_t* user);
+
 /* Add an item to the player's inventory.
  * if one of the same type is already present,
  * it will be "stacked on" to the existing one.

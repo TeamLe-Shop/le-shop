@@ -1,5 +1,6 @@
 #include "screen.h"
 #include "usd.h"
+#include "util/math.h"
 
 #include <curses.h>
 #include <string.h>
@@ -125,10 +126,13 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 	memset(str, '_', x);
 	mvprintw(1, 0,"%.*s\n", x, str);
 
+	int view_y = ui_state->selected_item;
+
 	/* -= Render the Shop List =- */
-	for (i = 0; i < shop_item_count(shop); i++)
+	for (i = 0; i < MIN(shop_item_count(shop) - view_y, SCREEN_MENU_HEIGHT); i++)
 	{
-		if (ui_state->selected_item == i)
+		int item_index = i + view_y;
+		if (ui_state->selected_item == item_index)
 		{
 			if (ui_state->mode == MENU)
 				attron(COLOR_PAIR(1));
@@ -136,7 +140,7 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 				attron(COLOR_PAIR(2));
 		}
 		
-		writestr_item(str, shop_item_at(shop, i));
+		writestr_item(str, shop_item_at(shop, item_index));
 		mvprintw(2 + i, 0, "%s\n", str);
 
 		attroff(COLOR_PAIR(1));

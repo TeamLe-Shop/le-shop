@@ -126,7 +126,7 @@ static void render(shop_t* shop, user_t* user, ui_state_t* ui_state)
 	memset(str, '_', x);
 	mvprintw(1, 0,"%.*s\n", x, str);
 
-	int view_y = ui_state->selected_item;
+	int view_y = MAX(ui_state->selected_item - 2, 0);
 
 	/* -= Render the Shop List =- */
 	for (i = 0; i < MIN(shop_item_count(shop) - view_y, SCREEN_MENU_HEIGHT); i++)
